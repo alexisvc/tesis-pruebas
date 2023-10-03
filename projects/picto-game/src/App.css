@@ -1,42 +1,93 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+/* App.css */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-image: url('/src/assets/ciudad-silencio.png'); /* Ruta a la imagen de fondo */
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+}
+
+.App {
+  font-family: Arial, sans-serif;
   text-align: center;
+  margin: 20px;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+h1 {
+  font-size: 28px;
+  color: #333;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+h2 {
+  font-size: 24px;
+  color: #444;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+label {
+  font-size: 18px;
+  color: #666;
+  margin-right: 10px;
 }
 
-.card {
-  padding: 2em;
+select {
+  font-size: 16px;
+  padding: 5px;
 }
 
-.read-the-docs {
-  color: #888;
+.word {
+  font-size: 32px; /* Aumenta el tamaño de la letra de la palabra */
+  margin-bottom: 20px;
+  background-size: cover;
+  color: #000;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.images {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Crea un grid con columnas autoajustables */
+  gap: 10px;
+  justify-items: center;
+}
+
+img {
+  width: 150px;
+  height: 150px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+img:hover {
+  transform: scale(1.1); /* Efecto de escala al pasar el ratón sobre la imagen */
+}
+
+button {
+  font-size: 16px;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  margin-bottom: 10px;
+}
+
+button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+button:hover {
+  background-color: #0056b3;
 }
