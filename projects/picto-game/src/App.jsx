@@ -13,6 +13,18 @@ const pictogramsData = [
   { name: 'NECESITAR', url: 'https://api.arasaac.org/api/pictograms/37160?download=false&plural=false&color=true' },
 ];
 
+const answersData = [
+  { name: 'Yo', url: 'https://api.arasaac.org/api/pictograms/6632?download=false&plural=false&color=true' }, 
+  { name: 'Tú', url: 'https://api.arasaac.org/api/pictograms/6625?download=false&plural=false&color=true' }, 
+  { name: 'Él', url: 'https://api.arasaac.org/api/pictograms/6481?download=false&plural=false&color=true' }, 
+  { name: 'Nosotros', url: 'https://api.arasaac.org/api/pictograms/32306?download=false&plural=false&color=true' },
+  { name: 'Ellos', url: 'https://api.arasaac.org/api/pictograms/31906?download=false&plural=false&color=true' }, 
+  { name: 'QUERER', url: 'https://api.arasaac.org/api/pictograms/5441?download=false&plural=false&color=true' }, 
+  { name: 'CORRER', url: 'https://api.arasaac.org/api/pictograms/6465?download=false&plural=false&color=true' }, 
+  { name: 'COMER', url: 'https://api.arasaac.org/api/pictograms/6456?download=false&plural=false&color=true' },
+  { name: 'NECESITAR', url: 'https://api.arasaac.org/api/pictograms/37160?download=false&plural=false&color=true' },
+];
+
 function App() {
   const [currentPictograms, setCurrentPictograms] = useState([]);
   const [currentPictogram, setCurrentPictogram] = useState(null);
@@ -105,9 +117,12 @@ function App() {
       {currentPictogram && (
         <div>
           <h2>¿Qué pictograma representa esta palabra?</h2>
-          <p className="word" onMouseOver={() => handleMouseOver(currentPictogram.name)}>
-            {currentPictogram.name}
-          </p>
+          <img
+            src={answersData.find(item => item.name === currentPictogram.name)?.url}
+            alt={currentPictogram.name}
+            onMouseOver={() => handleMouseOver(currentPictogram.name)}
+            onClick={() => checkAnswer(currentPictogram.name)}
+          />
           <div className="images">
             {currentPictograms.map((pictogram) => (
               <img
