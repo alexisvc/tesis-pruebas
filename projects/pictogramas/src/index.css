@@ -1,0 +1,6 @@
+/* Estilo para el componente App */
+.App {
+  display: flex;
+  flex-direction: column;
+  background-color: #bbb;
+}
