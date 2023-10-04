@@ -1,4 +1,3 @@
-/* App.css */
 body {
   font-family: Arial, sans-serif;
   margin: 0;
@@ -8,11 +7,11 @@ body {
   align-items: center;
   justify-content: center;
   height: 100vh;
-  background-image: url('/src/assets/ciudad-silencio.png'); /* Ruta a la imagen de fondo */
+  background-image: url('/src/assets/ciudad-silencio.png');
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
-  background-position: center;
+  background-position: center;  
 }
 
 .App {
@@ -43,7 +42,7 @@ select {
 }
 
 .word {
-  font-size: 32px; /* Aumenta el tamaño de la letra de la palabra */
+  font-size: 32px;
   margin-bottom: 20px;
   background-size: cover;
   color: #000;
@@ -66,7 +65,7 @@ img {
 }
 
 img:hover {
-  transform: scale(1.1); /* Efecto de escala al pasar el ratón sobre la imagen */
+  transform: scale(1.1);
 }
 
 button {
@@ -88,4 +87,60 @@ button:disabled {
 
 button:hover {
   background-color: #0056b3;
+}
+
+.game-title {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.game-info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.game-stats {
+  display: flex;
+  justify-content: space-around;
+  width: 300px;
+  background-color: #fff;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.stat {
+  text-align: center;
+}
+
+.stat-label {
+  font-weight: bold;
+}
+
+.stat-value {
+  font-size: 24px;
+  color: #007bff;
+}
+
+.images {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.images img {
+  width: 100px;
+  height: 100px;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+}
+
+.images img:hover {
+  transform: scale(1.1);
 }
