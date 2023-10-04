@@ -22,7 +22,7 @@ function PictogramQuestion({ currentPictogram, handleMouseOver }) {
           alt={currentPictogram.name}
         />
         <div>
-            <button onClick={() => handleMouseOver(currentPictogram.name)}>Leer</button>
+            <button onClick={() => handleMouseOver(currentPictogram.name)}>▶️</button>
         </div>
       </div>
     )

@@ -3,6 +3,7 @@ import "./App.css";
 import GameHeader from "./components/GameHeader";
 import PictogramQuestion from "./components/PictogramQuestion";
 import PictogramOptions from "./components/PictogramOptions";
+import confetti from "canvas-confetti";
 
 const pictogramsData = [
   { name: 'Yo', url: 'https://api.arasaac.org/api/pictograms/6632?download=false&plural=false&color=true' }, 
@@ -69,17 +70,16 @@ function App() {
   const handleMouseOver = (textToSpeak) => {
     if (synthesis) {
       const utterance = new SpeechSynthesisUtterance(textToSpeak);
-      
       // Configura la velocidad de lectura más lenta (0.7 es un valor de ejemplo, puedes ajustarlo)
-      utterance.rate = 0.8;
-      
+      utterance.rate = 0.5;
       synthesis.speak(utterance);
     }
   };
 
   const checkAnswer = (imageName) => {
     if (currentPictogram && currentPictogram.name === imageName) {
-      alert("¡Muy bien!");
+      confetti(); // Dispara los confettis
+      //alert("¡Muy bien!");
 
       // Aumentar los puntos en 1
       setPoints(points + 1);

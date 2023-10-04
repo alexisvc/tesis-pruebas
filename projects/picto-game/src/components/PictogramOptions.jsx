@@ -7,8 +7,8 @@ function PictogramOptions({ currentPictograms, handleMouseOver, checkAnswer }) {
         <div key={pictogram.name}>
           <img src={pictogram.url} alt={pictogram.name} />
           <div>
-            <button onClick={() => handleMouseOver(pictogram.name)}>Leer</button>
-            <button onClick={() => checkAnswer(pictogram.name)}>Responder</button>
+            <button onClick={() => handleMouseOver(pictogram.name)}>▶️</button>
+            <button onClick={() => checkAnswer(pictogram.name)}>✔️</button>
           </div>
         </div>
       ))}
