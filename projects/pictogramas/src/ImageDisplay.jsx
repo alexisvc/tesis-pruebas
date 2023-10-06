@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
-import './ImageDisplay.css'; // Agregamos el archivo CSS
+import './ImageDisplay.css'; // Reemplaza 'TuArchivoDeEstilos.css' con la ubicación de tu archivo CSS
 
 export function ImageDisplay({ images }) {
   const [selectedImages, setSelectedImages] = useState([]);
   const [speaking, setSpeaking] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState('');
+
+  const categories = Array.from(new Set(images.map(image => image.category)));
 
   const handleImageClick = (altText, imageUrl) => {
     if (!speaking) {
       const synth = window.speechSynthesis;
-
       if (synth) {
         const utterance = new SpeechSynthesisUtterance(altText);
         synth.speak(utterance);
@@ -24,14 +26,14 @@ export function ImageDisplay({ images }) {
   const handleDeleteLastImage = () => {
     if (!speaking && selectedImages.length > 0) {
       const updatedImages = [...selectedImages];
-      updatedImages.pop(); // Elimina la última imagen del array
+      updatedImages.pop();
       setSelectedImages(updatedImages);
     }
   };
 
   const handleDeleteAllImages = () => {
     if (!speaking && selectedImages.length > 0) {
-      setSelectedImages([]); // Borra todas las imágenes del array
+      setSelectedImages([]);
     }
   };
 
@@ -40,9 +42,8 @@ export function ImageDisplay({ images }) {
       setSpeaking(true);
 
       const synth = window.speechSynthesis;
-
       if (synth) {
-        synth.cancel(); // Detiene la síntesis de voz anterior si hay alguna
+        synth.cancel();
 
         selectedImages.forEach((image, index) => {
           const utterance = new SpeechSynthesisUtterance(image.alt);
@@ -59,20 +60,33 @@ export function ImageDisplay({ images }) {
     }
   };
 
+  const handleCategoryFilter = (category) => {
+    setSelectedCategory(category);
+  };
+
+  const filteredImages = selectedCategory
+    ? images.filter(image => image.category === selectedCategory)
+    : images;
+
   return (
-    <>
-      <div className="selected-images"> {/* Agregamos una clase para la disposición en fila */} {selectedImages.map((image, index) => (
-        <div key={index} className="card">
-          <img src={image.url} alt={image.alt} />
-          <h1 style={{ textTransform: 'uppercase' }}>{image.alt}</h1> {/* Aplicamos el estilo de mayúsculas */}
+    <div className="container">
+      {/* Div superior para pictogramas seleccionados y botones */}
+      <div className="selected-images-and-buttons">
+        <div className="selected-images">
+          {selectedImages.map((image, index) => (
+            <div key={index} className="card">
+              <img src={image.url} alt={image.alt} />
+              <p style={{ textTransform: 'uppercase' }}>{image.alt}</p>
+            </div>
+          ))}
         </div>
-        ))}
-        <div className="button-container"> {/* Agregamos una clase para el contenedor de botones */}
+
+        <div className="button-container">
           <button onClick={handleDeleteLastImage} disabled={speaking}>
             Eliminar
           </button>
           <button onClick={handleDeleteAllImages} disabled={speaking}>
-            Eliminar todo
+            Eliminar todos
           </button>
           <button onClick={handleReadSelectedImages} disabled={speaking}>
             Play
@@ -80,14 +94,31 @@ export function ImageDisplay({ images }) {
         </div>
       </div>
 
-      <div className="image-grid"> {/* Agregamos una clase para la cuadrícula */} {images.map((image, index) => (
-        <div key={index} className="card" onClick={()=> handleImageClick(image.name, image.url)}>
-          <img src={image.url} alt={image.name} />
-          <h1 style={{ textTransform: 'uppercase' }}>{image.name}</h1> {/* Aplicamos el estilo de mayúsculas */}
+      {/* Grid para mostrar categorías y pictogramas */}
+      <div className="grid-container">
+        {/* Columna de categorías */}
+        <div className="categories">
+          {categories.map((category, index) => (
+            <button key={index} onClick={() => handleCategoryFilter(category)}>
+              {category}
+            </button>
+          ))}
         </div>
-        ))}
+
+        {/* Columna de pictogramas */}
+        <div className="image-grid">
+          <div className="image-grid-inner">
+            {filteredImages.map((image, index) => (
+              <div key={index} className="card" onClick={() => handleImageClick(image.name, image.url)}>
+                <div className="card-image">
+                  <img src={image.url} alt={image.name} />
+                </div>
+                <p>{image.name}</p>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
-      
-    </> 
+    </div>
   );
 }
