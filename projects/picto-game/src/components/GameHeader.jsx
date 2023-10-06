@@ -11,7 +11,7 @@ function GameHeader({ lives, points, badges }) {
     <div className="game-info">
       <div className="game-stats">
         <div className="stat">
-          {/* <span className="stat-label">Vidas: </span> */}
+          <span className="stat-label">Vidas: </span>
           <span className="stat-value">{livesIcon}</span>
         </div>
         <div className="stat">
@@ -19,7 +19,7 @@ function GameHeader({ lives, points, badges }) {
           <span className="stat-value">{pointsIcon}</span>
         </div>
         <div className="stat">
-          {/* <span className="stat-label">Insignias: </span> */}
+          <span className="stat-label">Insignias: </span>
           <span className="stat-value">{badgesIcon}</span>
         </div>
       </div>

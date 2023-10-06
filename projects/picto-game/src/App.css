@@ -7,7 +7,7 @@ body {
   align-items: center;
   justify-content: center;
   height: 100vh;
-  background-image: url('/src/assets/ciudad-silencio.png');
+  background-image: url('/src/assets/backgrounds/ciudad-silencio.png');
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;

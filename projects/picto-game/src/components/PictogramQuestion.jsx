@@ -6,10 +6,10 @@ const answersData = [
     { name: 'Él', url: 'src/assets/pictogramas-transparentes/pronombres/él.png' }, 
     { name: 'Nosotros', url: 'src/assets/pictogramas-transparentes/pronombres/nosotros.png' },
     { name: 'Ellos', url: 'src/assets/pictogramas-transparentes/pronombres/ellos.png' }, 
-    { name: 'QUERER', url: 'src/assets/pictogramas-transparentes/acciones/querer.png' }, 
-    { name: 'CORRER', url: 'src/assets/pictogramas-transparentes/acciones/correr.png' }, 
-    { name: 'COMER', url: 'src/assets/pictogramas-transparentes/acciones/comer.png' },
-    { name: 'NECESITAR', url: 'src/assets/pictogramas-transparentes/acciones/necesitar.png' },
+    { name: 'Querer', url: 'src/assets/pictogramas-transparentes/acciones/querer.png' }, 
+    { name: 'Correr', url: 'src/assets/pictogramas-transparentes/acciones/correr.png' }, 
+    { name: 'Comer', url: 'src/assets/pictogramas-transparentes/acciones/comer.png' },
+    { name: 'Necesitar', url: 'src/assets/pictogramas-transparentes/acciones/necesitar.png' },
   ];
 
 function PictogramQuestion({ currentPictogram, handleMouseOver }) {
@@ -22,7 +22,7 @@ function PictogramQuestion({ currentPictogram, handleMouseOver }) {
           alt={currentPictogram.name}
         />
         <div>
-            <button onClick={() => handleMouseOver(currentPictogram.name)}>▶️</button>
+            <button onClick={() => handleMouseOver(currentPictogram.name)}>🔊</button>
         </div>
       </div>
     )

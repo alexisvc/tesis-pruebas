@@ -4,18 +4,8 @@ import GameHeader from "./components/GameHeader";
 import PictogramQuestion from "./components/PictogramQuestion";
 import PictogramOptions from "./components/PictogramOptions";
 import confetti from "canvas-confetti";
+import { getAllPictograms } from "./services/notes/getAllPictograms.js";
 
-const pictogramsData = [
-  { name: 'Yo', url: 'https://api.arasaac.org/api/pictograms/6632?download=false&plural=false&color=true' }, 
-  { name: 'Tú', url: 'https://api.arasaac.org/api/pictograms/6625?download=false&plural=false&color=true' }, 
-  { name: 'Él', url: 'https://api.arasaac.org/api/pictograms/6481?download=false&plural=false&color=true' }, 
-  { name: 'Nosotros', url: 'https://api.arasaac.org/api/pictograms/32306?download=false&plural=false&color=true' },
-  { name: 'Ellos', url: 'https://api.arasaac.org/api/pictograms/31906?download=false&plural=false&color=true' }, 
-  { name: 'QUERER', url: 'https://api.arasaac.org/api/pictograms/5441?download=false&plural=false&color=true' }, 
-  { name: 'CORRER', url: 'https://api.arasaac.org/api/pictograms/6465?download=false&plural=false&color=true' }, 
-  { name: 'COMER', url: 'https://api.arasaac.org/api/pictograms/6456?download=false&plural=false&color=true' },
-  { name: 'NECESITAR', url: 'https://api.arasaac.org/api/pictograms/37160?download=false&plural=false&color=true' },
-];
 
 function App() {
   const [currentPictograms, setCurrentPictograms] = useState([]);
@@ -28,7 +18,6 @@ function App() {
 
   useEffect(() => {
     getRandomPictograms(difficulty);
-
     // Inicializa la síntesis de voz
     const synthesis = window.speechSynthesis;
     setSynthesis(synthesis);
@@ -36,16 +25,25 @@ function App() {
 
   const getRandomPictograms = (selectedDifficulty) => {
     let numberOfPictograms = 3; // Por defecto, se inicia con 3 pictogramas para "Fácil"
-
+  
     if (selectedDifficulty === "Normal") {
       numberOfPictograms = 5;
     } else if (selectedDifficulty === "Difícil") {
       numberOfPictograms = 7;
     }
-
-    const shuffledPictograms = shuffleArray(pictogramsData).slice(0, numberOfPictograms);
-    setCurrentPictograms(shuffledPictograms);
-    getRandomPictogram(shuffledPictograms);
+  
+    // Hacer una solicitud a la API para obtener pictogramas de acuerdo a la dificultad
+    getAllPictograms()
+      .then((data) => {
+        // El resultado de la solicitud estará en la variable "data"
+        // A continuación, puedes usar "data" para establecer los pictogramas iniciales.
+        const shuffledPictograms = shuffleArray(data).slice(0, numberOfPictograms);
+        setCurrentPictograms(shuffledPictograms);
+        getRandomPictogram(shuffledPictograms);
+      })
+      .catch((error) => {
+        console.error("Error al obtener los pictogramas:", error);
+      });
   };
 
   const shuffleArray = (array) => {
@@ -70,7 +68,6 @@ function App() {
   const handleMouseOver = (textToSpeak) => {
     if (synthesis) {
       const utterance = new SpeechSynthesisUtterance(textToSpeak);
-      // Configura la velocidad de lectura más lenta (0.7 es un valor de ejemplo, puedes ajustarlo)
       utterance.rate = 0.5;
       synthesis.speak(utterance);
     }
@@ -79,16 +76,9 @@ function App() {
   const checkAnswer = (imageName) => {
     if (currentPictogram && currentPictogram.name === imageName) {
       confetti(); // Dispara los confettis
-      //alert("¡Muy bien!");
-
+      alert("¡Muy bien!");
       // Aumentar los puntos en 1
       setPoints(points + 1);
-
-      // Agregar una insignia si es necesario
-      if (points + 1 >= 5 && (points + 1) % 5 === 0) {
-        setBadges(badges + 1);
-      }
-
       // Elimina el pictograma correcto de la lista
       const updatedPictograms = currentPictograms.filter(pictogram => pictogram.name !== imageName);
       setCurrentPictograms(updatedPictograms);
@@ -99,23 +89,20 @@ function App() {
       } else {
         // Si no quedan pictogramas, has completado el juego
         alert("¡Has completado el juego!");
-
         // Aumentar las insignias al completar el juego
         setBadges(badges + 1);
-
         setDifficulty("Fácil"); // Reinicia el juego con la dificultad "Fácil" (puedes ajustar esto)
         getRandomPictograms("Fácil");
       }
     } else {
       alert("Incorrecto. Intenta de nuevo.");
-
       // Disminuir una vida
       setLives(lives - 1);
-
       // Comprobar si se han agotado todas las vidas
       if (lives - 1 === 0) {
         alert("¡Has perdido todas tus vidas!");
-        // Puedes agregar aquí lógica para reiniciar el juego si lo deseas
+        setDifficulty("Fácil"); // Reinicia el juego con la dificultad "Fácil" (puedes ajustar esto)
+        getRandomPictograms("Fácil");
       }
     }
   };
