@@ -76,7 +76,7 @@ export function ImageDisplay({ images }) {
           {selectedImages.map((image, index) => (
             <div key={index} className="card">
               <img src={image.url} alt={image.alt} />
-              <p style={{ textTransform: 'uppercase' }}>{image.alt}</p>
+              <p>{image.alt}</p>
             </div>
           ))}
         </div>
