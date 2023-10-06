@@ -1,10 +1,15 @@
 import React, { useState } from 'react';
-import './ImageDisplay.css'; // Reemplaza 'TuArchivoDeEstilos.css' con la ubicación de tu archivo CSS
+import { createPictogram } from "./services/pictograms/createPictogram.js";
+import './ImageDisplay.css';
 
 export function ImageDisplay({ images }) {
   const [selectedImages, setSelectedImages] = useState([]);
   const [speaking, setSpeaking] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState('');
+  const [showForm, setShowForm] = useState(false);
+  const [nameValue, setNameValue] = useState("");
+  const [categoryValue, setCategoryValue] = useState("");
+  const [urlValue, setUrlValue] = useState("");
 
   const categories = Array.from(new Set(images.map(image => image.category)));
 
@@ -68,8 +73,55 @@ export function ImageDisplay({ images }) {
     ? images.filter(image => image.category === selectedCategory)
     : images;
 
+    const handleSubmit = (e) => {
+      e.preventDefault(); // Evita la recarga de la página
+      const pictogramToAdd = {
+        name: nameValue,
+        category: categoryValue, // Utiliza el valor de category
+        url: urlValue, // Utiliza el valor de url
+      };
+  
+      createPictogram(pictogramToAdd)
+        .then((newPictogram) => {
+          //setPictograms((prevPictograms) => [...prevPictograms, newPictogram]);
+          setNameValue("");
+          setCategoryValue(""); // Limpia el valor del campo de categoría
+          setUrlValue(""); // Limpia el valor del campo de URL
+        })
+        .catch((error) => {
+          console.error("Error al crear el pictograma:", error);
+          // Aquí puedes mostrar un mensaje de error al usuario si lo deseas
+        });
+    };
+
+    const handleChange = (e) => {
+      setNameValue(e.target.value);
+    };
+
   return (
     <div className="container">
+      <button onClick={() => setShowForm(true)}>Personalizar</button>
+      {showForm && (
+        <form onSubmit={handleSubmit}>
+          <input type="text" placeholder="name" onChange={handleChange} value={nameValue} />
+          <br />
+          <input
+            type="text"
+            placeholder="Category"
+            value={categoryValue}
+            onChange={(e) => setCategoryValue(e.target.value)}
+          />
+          <br />
+          <input
+            type="text"
+            placeholder="URL"
+            value={urlValue}
+            onChange={(e) => setUrlValue(e.target.value)}
+          />
+          <br />
+          <button>Crear pictograma</button>
+        </form>
+      )}
       {/* Div superior para pictogramas seleccionados y botones */}
       <div className="selected-images-and-buttons">
         <div className="selected-images">

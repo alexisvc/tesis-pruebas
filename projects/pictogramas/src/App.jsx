@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { ImageDisplay } from './ImageDisplay';
-import { getAllPictograms } from "./services/notes/getAllPictograms.js";
+import { getAllPictograms } from "./services/pictograms/getAllPictograms.js";
 
 function App() {
   const [pictogramsData, setPictogramsData] = useState([]);
